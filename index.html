@@ -1,37 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Books</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Book Collection</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f8f8f8;
-      padding: 30px;
+      background-color: #f4f4f4;
       text-align: center;
+      padding: 30px;
     }
-    a {
+    h1 {
+      color: #333;
+    }
+    a, button {
       display: block;
-      margin: 10px 0;
+      margin: 10px auto;
+      padding: 10px 15px;
+      background-color: #0078d7;
+      color: white;
       text-decoration: none;
-      color: #0078d7;
-      font-size: 18px;
-      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 200px;
     }
-    a:hover {
-      color: #0056a3;
+    a:hover, button:hover {
+      background-color: #0056a3;
+    }
+    iframe {
+      width: 100%;
+      height: 80vh;
+      border: none;
+      margin-top: 20px;
+    }
+    #viewer {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>📚 My Book Collection</h1>
-  <p>Tap on a book title to open it in a new tab.</p>
 
-  <!-- Links to PDFs -->
-  <a href="book1.pdf" target="_blank">Book 1</a>
-  <a href="book2.pdf" target="_blank">Book 2</a>
-  <a href="book3.pdf" target="_blank">Book 3</a>
+  <h1>📚 My Book Collection</h1>
+
+  <!-- Book List -->
+  <div id="bookList">
+    <a href="#" onclick="openBook('book1.pdf')">Book 1</a>
+    <a href="#" onclick="openBook('book2.pdf')">Book 2</a>
+    <a href="#" onclick="openBook('book3.pdf')">Book 3</a>
+  </div>
+
+  <!-- PDF Viewer -->
+  <div id="viewer">
+    <button onclick="goBack()">⬅️ Back to Book List</button>
+    <iframe id="pdfFrame"></iframe>
+  </div>
+
+  <script>
+    function openBook(pdfFile) {
+      // hide book list
+      document.getElementById('bookList').style.display = 'none';
+      // show viewer
+      document.getElementById('viewer').style.display = 'block';
+      // load PDF (use Google Docs viewer for mobile compatibility)
+      const pdfFrame = document.getElementById('pdfFrame');
+      const fullURL = `https://docs.google.com/gview?url=https://syedaliraza39373-arch.github.io/Books/${pdfFile}&embedded=true`;
+      pdfFrame.src = fullURL;
+    }
+
+    function goBack() {
+      // clear iframe
+      document.getElementById('pdfFrame').src = '';
+      // hide viewer
+      document.getElementById('viewer').style.display = 'none';
+      // show book list again
+      document.getElementById('bookList').style.display = 'block';
+    }
+  </script>
 
 </body>
 </html>
